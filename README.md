@@ -1,91 +1,141 @@
+# Outer Commerce API
 
-<!-- ABOUT THE PROJECT -->
-## About The Project
+[![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
+[![Express](https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white)](https://expressjs.com/)
+[![Sequelize](https://img.shields.io/badge/Sequelize-52B0E7?style=flat-square&logo=sequelize&logoColor=white)](https://sequelize.org/)
+[![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white)](https://www.mysql.com/)
+[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![dotenv](https://img.shields.io/badge/dotenv-ECD53F?style=flat-square&logo=dotenv&logoColor=black)](https://www.npmjs.com/package/dotenv)
+[![npm](https://img.shields.io/badge/npm-CB3837?style=flat-square&logo=npm&logoColor=white)](https://www.npmjs.com/)
 
-AS A manager at an internet retail company
-I WANT a back end for my e-commerce website that uses the latest technologies
-SO THAT my company can compete with other e-commerce companies
-_______________________________________________________________________________________________________________________________________________
+Outer Commerce is a backend API for managing core e-commerce catalog data: **products, categories, and tags**. It is built with Express and Sequelize, backed by MySQL, and designed for clean JSON-based CRUD workflows that can power a storefront or admin dashboard.
 
-### Criteria
+## Why this project
 
-GIVEN a functional Express.js API
+This service gives teams a practical starting point for e-commerce backend development:
 
-- WHEN I add my database name, MySQL username, and MySQL password to an environment variable file
-  - THEN I am able to connect to a database using Sequelize
-- WHEN I enter schema and seed commands
-  - THEN a development database is created and is seeded with test data
-- WHEN I enter the command to invoke the application
-  - THEN my server is started and the Sequelize models are synced to the MySQL database
-- WHEN I open API GET routes in Insomnia for categories, products, or tags
-  - THEN the data for each of these routes is displayed in a formatted JSON
-- WHEN I test API POST, PUT, and DELETE routes in Insomnia
-  - THEN I am able to successfully create, update, and delete data in my database
-  ______________________________________________________________________________________________________________________________________________________
+- Organize products into categories
+- Attach multiple tags to products via a join table
+- Perform full CRUD operations through REST-style endpoints
+- Seed realistic starter data for local development and testing
 
-### What was done
+## Features
 
-Created app in Java script using express and mysql2 to build the backend for the frontend engineer to complete the full site.
-future development will include a swagger UI for quick REST api access.(See swagger branch for progress)
+- Express API under `/api`
+- Sequelize models and associations:
+  - `Category` has many `Product`
+  - `Product` belongs to `Category`
+  - `Product` belongs to many `Tag` through `ProductTag`
+  - `Tag` belongs to many `Product` through `ProductTag`
+- JSON request/response handling with URL-encoded support
+- Environment-based database configuration via `.env`
+- Optional `JAWSDB_URL` support in the database connection layer
 
-_______________________________________________________________________________________________________________________________________________________
+## Tech Stack
 
-## Tech Used:  
+- **Runtime:** Node.js
+- **Framework:** Express
+- **ORM:** Sequelize
+- **Database:** MySQL (`mysql2` driver)
+- **Config:** dotenv
+- **Dev tooling:** nodemon
+- **Package manager:** npm
 
-- ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?logo=javascript&logoColor=%23F7DF1E&style=for-the-badge)
+## Getting Started
 
-App runtime Frameworks and helpers:
+### Prerequisites
 
-- ![Node.js ](https://img.shields.io/badge/node.js-6DA55F?logo=node.js&logoColor=white&style=for-the-badge)
+- Node.js (LTS recommended)
+- npm
+- MySQL server
 
-- ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?logo=express&logoColor=%2361DAFB&style=for-the-badge)
+### Installation
 
-- ![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?logo=mysql&logoColor=white&style=for-the-badge)
+1. Clone the repository
+2. Install dependencies:
 
-### Instalation
-
-- Clone or Fork the Repo to your computer.
-- Install NODEjs.
-- Use NPM to install dependencies:
-    "dotenv": "^16.0.0",
-    "express": "^4.17.3",
-    "mysql2": "^2.3.3",
-    "sequelize": "^6.17.0
-
+```bash
+npm install
 ```
 
-npm install 
+3. Create the database schema:
 
+```bash
+mysql -u <your_mysql_user> -p < db/schema.sql
 ```
 
-### Usage
+4. Create a `.env` file in the project root:
 
-Run the following from the directory where you have downloaded the repo.
-
+```env
+DB_NAME=ecommerce_db
+DB_USER=your_mysql_user
+DB_PW=your_mysql_password
+# Optional (used instead of local DB fields when set)
+# JAWSDB_URL=******host:port/database
 ```
 
+5. Seed starter data:
+
+```bash
 npm run seed
-npm start
-
 ```
 
-this is only if you want to run this in your own deployment. the live app is currently deployed on heroku.
+6. Start the API:
 
-### Videos
-    
- Link
-    https://www.youtube.com/watch?v=BZ4SIYFjW-I&t=458s 
+```bash
+npm start
+```
 
+For development with auto-reload:
 
+```bash
+npm run watch
+```
 
-<!-- CONTACT -->
+## Available Scripts
+
+- `npm start` - starts the server on `PORT` (default `3001`)
+- `npm run watch` - starts the server with nodemon
+- `npm run seed` - syncs and seeds database tables
+- `npm test` - placeholder script currently not configured for automated tests
+
+## API Overview
+
+Base path: `/api`
+
+- `/api/categories`
+- `/api/products`
+- `/api/tags`
+
+Each resource supports standard CRUD routes:
+
+- `GET /`
+- `GET /:id`
+- `POST /`
+- `PUT /:id`
+- `DELETE /:id`
+
+The root router returns `Wrong Route!` for unknown endpoints.
+
+## Project Structure
+
+```text
+config/      # Sequelize connection setup
+models/      # Sequelize models + associations
+routes/      # Express routers and API endpoints
+seeds/       # Seed datasets and seed runner
+db/          # SQL schema setup
+server.js    # Application entry point
+```
+
+## Demo
+
+- Walkthrough video: https://www.youtube.com/watch?v=BZ4SIYFjW-I&t=458s
+
+## Contributing
+
+Contributions are welcome. Open an issue or submit a pull request with a focused change and clear description.
+
 ## Contact
 
 Karltunmoreno@gmail.com
-___________________________________________________________________________________________________________________________________________________
-
-
-
-
-_______________________________________________________________________________________________________________________________________________________________________
-
