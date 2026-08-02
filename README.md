@@ -6,6 +6,10 @@ Outer-Commerce provides the core data layer for an online store, including produ
 
 ---
 
+
+![App Screenshot](ddd.png)
+--------------------------------
+
 ## 🚀 Why Outer-Commerce?
 
 Running an online store requires reliable, scalable backend services. This project is designed to provide a strong foundation for commerce platforms with:
